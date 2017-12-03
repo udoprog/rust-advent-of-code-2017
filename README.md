@@ -15,3 +15,10 @@ cargo run --bin day1 -- input/day1.txt -2
 cargo run --bin day2 -- input/day2.txt
 cargo run --bin day2 -- input/day2.txt -2
 ```
+
+## Day 3
+
+```bash
+cargo run --bin day3 -- 265149
+cargo run --bin day3 -- 265149 -2
+```
