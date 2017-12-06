@@ -18,35 +18,28 @@ where
     let mut data = String::new();
     reader.read_to_string(&mut data)?;
 
-    let mut banks: Vec<u32> = data.trim()
+    let mut banks = data.trim()
         .split_whitespace()
         .map(str::parse)
-        .collect::<Result<Vec<_>, _>>()?;
+        .collect::<Result<Vec<u32>, _>>()?;
 
     let mut states: HashMap<Vec<u32>, usize> = HashMap::new();
-
     let size = banks.len();
 
     states.insert(banks.clone(), 0);
 
     for i in 1usize.. {
-        let max = *banks.iter().max().expect("a max value");
+        let idx = banks
+            .iter()
+            .max()
+            .and_then(|max| banks.iter().enumerate().find(|v| *v.1 == *max))
+            .expect("a max value")
+            .0;
 
-        let (idx, mut value, sub) = {
-            let (idx, first) = banks
-                .iter_mut()
-                .enumerate()
-                .find(|&(_, ref v)| **v == max)
-                .expect("one number");
+        let value = mem::replace(&mut banks[idx], 0u32) as usize;
 
-            let value = mem::replace(first, 0u32);
-            let sub = (value + size as u32 - 1) / size as u32;
-            (idx + 1, value, u32::max(sub, 1))
-        };
-
-        for i in (idx..banks.len()).chain(0usize..idx) {
-            banks[i] += u32::min(sub, value);
-            value = value.saturating_sub(sub);
+        for i in idx + 1..idx + value + 1 {
+            banks[i % size] += 1;
         }
 
         if let Some(prev) = states.insert(banks.clone(), i) {
