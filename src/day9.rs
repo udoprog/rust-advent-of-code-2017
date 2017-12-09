@@ -1,64 +1,39 @@
-use std::io::{Read};
+use std::io::Read;
 use failure::Error;
 use std::str;
 
-struct Lexer<'a> {
-    chars: str::Chars<'a>,
-}
-
-impl<'a> Iterator for Lexer<'a> {
-    type Item = char;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        while let Some(c) = self.chars.next() {
-            if c == '!' {
-                self.chars.next();
-                continue;
-            }
-
-            return Some(c);
-        }
-
-        None
-    }
-}
-
-fn score(input: Lexer) -> (u64, u64) {
+fn score(input: &str) -> (u64, u64) {
     let mut garbage = 0u64;
 
     let mut total = 0u64;
     let mut depth = 0u64;
 
-    let mut input = input.peekable();
+    let mut input = input.chars();
 
     while let Some(c) = input.next() {
-        if c == '{' {
-            depth += 1;
-            continue;
-        }
-
-        if c == '}' && depth > 0 {
-            total += depth;
-            depth -= 1;
-            continue;
-        }
-
-        if c == '<' {
-            while let Some(&'<') = input.peek() {
-                garbage += 1;
+        match c {
+            '!' => {
                 input.next();
             }
-
-            while let Some(&c) = input.peek() {
-                if c == '>' {
-                    break;
+            '{' => {
+                depth += 1;
+            }
+            '}' => {
+                total += depth;
+                depth -= 1;
+            }
+            '<' => {
+                while let Some(c) = input.next() {
+                    match c {
+                        '!' => {
+                            input.next();
+                        }
+                        '>' => break,
+                        _ => garbage += 1,
+                    }
                 }
-
-                garbage += 1;
-                input.next();
             }
-
-            continue;
+            _ => {}
         }
     }
 
@@ -68,12 +43,7 @@ fn score(input: Lexer) -> (u64, u64) {
 pub fn run<R: Read>(mut reader: R) -> Result<(u64, u64), Error> {
     let mut data = String::new();
     reader.read_to_string(&mut data)?;
-
-    let lexer = Lexer {
-        chars: data.chars(),
-    };
-
-    let score = score(lexer);
+    let score = score(data.as_str());
     Ok(score)
 }
 
@@ -96,8 +66,14 @@ mod tests {
 
     #[test]
     fn test_example2() {
-        assert_eq!((9, 8), run(Cursor::new("{{<ab>},{<ab>},{<ab>},{<ab>}}")).unwrap());
-        assert_eq!((9, 0), run(Cursor::new("{{<!!>},{<!!>},{<!!>},{<!!>}}")).unwrap());
+        assert_eq!(
+            (9, 8),
+            run(Cursor::new("{{<ab>},{<ab>},{<ab>},{<ab>}}")).unwrap()
+        );
+        assert_eq!(
+            (9, 0),
+            run(Cursor::new("{{<!!>},{<!!>},{<!!>},{<!!>}}")).unwrap()
+        );
         assert_eq!((16, 0), run(Cursor::new("{{{},{},{{}}}}")).unwrap());
     }
 }
