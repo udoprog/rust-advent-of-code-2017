@@ -30,13 +30,10 @@ impl<'a> fmt::Debug for HexSlice<'a> {
 }
 
 fn reverse<T>(d: &mut [T], pos: usize, length: usize) {
-    let mut s = pos % d.len();
-    let mut e = (pos + length - 1) % d.len();
+    let len = d.len();
 
-    for _ in (0..length).step_by(2) {
-        d.swap(s, e);
-        s = (s + 1) % d.len();
-        e = if e == 0 { d.len() - 1 } else { e - 1 };
+    for (a, b) in (0..length / 2).zip((0..length).rev()) {
+        d.swap((pos + a) % len, (pos + b) % len);
     }
 }
 
@@ -44,20 +41,18 @@ pub fn part1<R: Read>(mut reader: R, end: usize) -> Result<usize, Error> {
     let mut line = String::new();
     reader.read_to_string(&mut line)?;
 
-    let mut numbers: Vec<usize> = (0usize..=end).collect();
-
     let lengths: Vec<usize> = line.trim()
         .split(',')
         .map(|d| d.parse::<usize>())
         .collect::<Result<Vec<_>, _>>()?;
 
-    let mut pos = 0usize;
-    let mut skip = 0usize;
+    let mut numbers: Vec<usize> = (0usize..=end).collect();
 
-    for length in &lengths {
-        reverse(&mut numbers, pos, *length);
+    let mut pos = 0usize;
+
+    for (skip, length) in lengths.into_iter().enumerate() {
+        reverse(&mut numbers, pos, length);
         pos = (pos + length + skip) % numbers.len();
-        skip += 1;
     }
 
     Ok(numbers[0] * numbers[1])
@@ -80,19 +75,18 @@ pub fn part2<R: Read>(mut reader: R) -> Result<String, Error> {
     let mut skip = 0usize..;
 
     for _ in 0..64 {
-        for (length, skip) in lengths.iter().zip(&mut skip) {
-            reverse(&mut sparse, pos, *length);
-            pos = (pos + *length + skip) % sparse.len();
+        for (l, skip) in lengths.iter().zip(&mut skip) {
+            reverse(&mut sparse, pos, *l);
+            pos = (pos + skip + *l) % sparse.len();
         }
     }
 
-    let mut out = vec![0u8; 16];
+    let out: Vec<u8> = sparse
+        .chunks(16)
+        .map(|chunk| chunk.into_iter().fold(0u8, |s, v| s ^ v))
+        .collect();
 
-    for (d, s) in out.iter_mut().zip(sparse.chunks(16)) {
-        *d = s.iter().fold(0u8, |s, v| s ^ v);
-    }
-
-    Ok(HexSlice::new(&out[..]).to_string())
+    Ok(HexSlice::new(&out).to_string())
 }
 
 #[cfg(test)]
