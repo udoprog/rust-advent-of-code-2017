@@ -75,6 +75,13 @@ cargo run --bin day10 -- input/day10.txt -2
 ## Day 11
 
 ```bash
-cargo run --bin day10 -- input/day11.txt
-cargo run --bin day10 -- input/day11.txt -2
+cargo run --bin day11 -- input/day11.txt
+cargo run --bin day11 -- input/day11.txt -2
+```
+
+## Day 12
+
+```bash
+cargo run --bin day12 -- input/day12.txt
+cargo run --bin day12 -- input/day12.txt -2
 ```
