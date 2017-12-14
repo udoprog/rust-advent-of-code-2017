@@ -1,15 +1,13 @@
-use std::fs::File;
 use std::io::Read;
 use failure::Error;
-use std::path::Path;
 use utils::char_to_digit;
 
-pub fn run<O, P: AsRef<Path>>(path: P, offset: O) -> Result<u32, Error>
+pub fn run<O, R: Read>(mut reader: R, offset: O) -> Result<u32, Error>
 where
     O: Fn(usize) -> usize,
 {
     let mut data = String::new();
-    File::open(path)?.read_to_string(&mut data)?;
+    reader.read_to_string(&mut data)?;
 
     let dig: Vec<u32> = data.trim()
         .chars()

@@ -7,4 +7,5 @@ authors = ["John-John Tedro <udoprog@tedro.se>"]
 failure = "0.1"
 structopt = "0.1"
 structopt-derive = "0.1"
+clap = "*"
 bit-vec = "*"

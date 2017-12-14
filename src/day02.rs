@@ -1,7 +1,5 @@
-use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::io::{BufReader, BufRead, Read};
 use failure::Error;
-use std::path::Path;
 
 pub fn minmax(values: &[u32]) -> u32 {
     if let Some(first) = values.first() {
@@ -31,11 +29,11 @@ pub fn evendiv(values: &[u32]) -> u32 {
     0
 }
 
-pub fn run<C, P: AsRef<Path>>(path: P, calc: C) -> Result<u32, Error>
+pub fn run<C, R: Read>(reader: R, calc: C) -> Result<u32, Error>
 where
     C: Fn(&[u32]) -> u32,
 {
-    let mut r = BufReader::new(File::open(path)?);
+    let mut r = BufReader::new(reader);
     let mut data = String::new();
 
     let mut sum = 0u32;
