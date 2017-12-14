@@ -10,6 +10,6 @@ entrypoint!(
         day13::part1(input)
     },
     {
-        Err("not done yet") as Result<&str, &str>
+        day13::part2(input)
     }
 );
