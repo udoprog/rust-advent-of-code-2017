@@ -58,7 +58,7 @@ pub fn part1<R: Read>(mut reader: R, end: usize) -> Result<usize, Error> {
     Ok(numbers[0] * numbers[1])
 }
 
-pub fn part2<R: Read>(mut reader: R) -> Result<String, Error> {
+pub fn hash<R: Read>(mut reader: R) -> Result<Vec<u8>, Error> {
     let mut line = String::new();
     reader.read_to_string(&mut line)?;
     let line = line.trim();
@@ -86,6 +86,11 @@ pub fn part2<R: Read>(mut reader: R) -> Result<String, Error> {
         .map(|chunk| chunk.into_iter().fold(0u8, |s, v| s ^ v))
         .collect();
 
+    Ok(out)
+}
+
+pub fn part2<R: Read>(reader: R) -> Result<String, Error> {
+    let out = hash(reader)?;
     Ok(HexSlice::new(&out).to_string())
 }
 

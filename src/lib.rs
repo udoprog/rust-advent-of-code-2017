@@ -7,6 +7,7 @@
 
 #[macro_use]
 extern crate failure;
+extern crate bit_vec;
 
 mod utils;
 pub mod errors;
@@ -22,3 +23,4 @@ pub mod day9;
 pub mod day10;
 pub mod day11;
 pub mod day12;
+pub mod day14;
