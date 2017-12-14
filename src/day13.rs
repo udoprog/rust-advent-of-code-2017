@@ -37,7 +37,6 @@ pub fn part1<R: Read>(mut reader: R) -> Result<usize, Error> {
     Ok(severity)
 }
 
-
 pub fn part2<R: Read>(mut reader: R) -> Result<usize, Error> {
     let mut layers = Vec::new();
 
@@ -51,24 +50,26 @@ pub fn part2<R: Read>(mut reader: R) -> Result<usize, Error> {
         layers.push((id, weight));
     }
 
-    let mut severity = 0;
+    'outer: for delay in 0.. {
+        for &(p, w) in &layers {
+            match w {
+                0 | 1 => panic!("bad weight: {}", w),
+                n => {
+                    let adj = 2 * w - 2;
 
-    for &(p, w) in &layers {
-        match w {
-            0 | 1 => panic!("bad weight: {}", w),
-            n => {
-                let adjusted = 2 * w - 2;
-
-                if (p + adjusted) % adjusted != 0 {
-                    continue;
+                    if (p + delay + adj) % adj != 0 {
+                        continue;
+                    }
                 }
             }
+
+            continue 'outer;
         }
 
-        severity += p * w;
+        return Ok(delay);
     }
 
-    Ok(severity)
+    Err(format_err!("no solution found"))
 }
 
 #[cfg(test)]
@@ -85,11 +86,16 @@ mod tests {
 
     #[test]
     fn example_part2() {
-        assert_eq!(part2(Cursor::new("0: 3\n1: 2\n4: 4\n6: 4\n")).unwrap(), 24);
+        assert_eq!(part2(Cursor::new("0: 3\n1: 2\n4: 4\n6: 4\n")).unwrap(), 10);
     }
 
     #[test]
     fn test_part1() {
         assert_eq!(part1(Cursor::new(INPUT)).unwrap(), 1632);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2(Cursor::new(INPUT)).unwrap(), 3834136);
     }
 }
