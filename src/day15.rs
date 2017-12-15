@@ -1,25 +1,35 @@
 use std::io::{Read, BufReader, BufRead};
+use std::ops::{GeneratorState, Generator};
 
 use failure::Error;
 
-pub fn run(mut a: u64, mut b: u64, upper: usize, a_factor: u64, b_factor: u64) -> usize {
+fn numgen(
+    mut num: u64,
+    factor: u64,
+    modulo: u64,
+    check_factor: u64,
+) -> impl Generator<Yield = u64, Return = !> {
+    move || loop {
+        num = (num * factor) % modulo;
+
+        if num % check_factor == 0 {
+            yield num;
+        }
+    }
+}
+
+pub fn run(a: u64, b: u64, upper: usize, a_factor: u64, b_factor: u64) -> usize {
     let mut count = 0;
 
     let mask = 0b1111_1111_1111_1111;
     let modulo = 2147483647;
 
+    let mut a_gen = numgen(a, 16807, modulo, a_factor);
+    let mut b_gen = numgen(b, 48271, modulo, b_factor);
+
     for _ in 0..upper {
-        a = (a * 16807) % modulo;
-
-        while a % a_factor != 0 {
-            a = (a * 16807) % modulo;
-        }
-
-        b = (b * 48271) % modulo;
-
-        while b % b_factor != 0 {
-            b = (b * 48271) % modulo;
-        }
+        let GeneratorState::Yielded(a) = a_gen.resume();
+        let GeneratorState::Yielded(b) = b_gen.resume();
 
         if a & mask == b & mask {
             count += 1;
