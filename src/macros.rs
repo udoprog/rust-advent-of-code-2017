@@ -34,10 +34,10 @@ macro_rules! entrypoint {
 
             if !matches.is_present("2") {
                 let result = $part1;
-                println!("result = {}", result.unwrap());
+                println!("result = {:?}", result);
             } else {
                 let result = $part2;
-                println!("result = {}", result.unwrap());
+                println!("result = {:?}", result);
             }
         }
     };
