@@ -10,6 +10,7 @@ extern crate failure;
 extern crate bit_vec;
 extern crate structopt;
 pub extern crate clap;
+extern crate cgmath;
 
 #[macro_use]
 mod macros;
@@ -34,3 +35,4 @@ pub mod day16;
 pub mod day17;
 pub mod day18;
 pub mod day19;
+pub mod day20;
