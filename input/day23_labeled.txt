@@ -1,0 +1,48 @@
+set b 57
+set c b
+jnz a init
+jnz 1 label1
+
+init:
+mul b 100
+sub b -100000
+set c b
+sub c -17000
+
+label1:
+set f 1
+set d 2
+
+label5:
+set e 2
+
+label4:
+set g d
+mul g e
+sub g b
+jnz g label2
+set f 0
+
+label2:
+sub e -1
+set g e
+sub g b
+jnz g label4 (-8)
+sub d -1
+set g d
+sub g b
+jnz g label5 (-13)
+jnz f label6
+sub h -1
+
+label6:
+set g b
+sub g c
+jnz g label7
+jnz 1 end
+
+label7:
+sub b -17
+jnz 1 label1
+
+end:
