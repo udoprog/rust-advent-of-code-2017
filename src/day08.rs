@@ -130,15 +130,10 @@ pub fn run<R: Read>(reader: R) -> Result<(i64, i64), Error> {
     ))
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day8.txt");
 
-    static INPUT: &str = include_str!("../input/day8.txt");
-
-    #[test]
-    fn test_all() {
-        assert_eq!((5849, 6702), run(Cursor::new(INPUT)).unwrap());
-    }
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "4e5de0c145806d4999a9aed7bf75b38b53dcb170dd75073bfe848e08be48dc59"},
+    ];
 }

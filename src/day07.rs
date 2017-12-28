@@ -120,18 +120,10 @@ pub fn run<R: Read>(reader: R) -> Result<(String, i32), Error> {
     Ok((root.id.to_string(), node.weight + diff))
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day7.txt");
 
-    static INPUT: &str = include_str!("../input/day7.txt");
-
-    #[test]
-    fn test_all() {
-        assert_eq!(
-            ("veboyvy".to_string(), 749),
-            run(Cursor::new(INPUT)).unwrap()
-        );
-    }
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "0ef75cd21db1d4d98aa58ba35b8465c17eee09168a8da3707d191d73c963eada"},
+    ];
 }

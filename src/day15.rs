@@ -61,20 +61,11 @@ pub fn part2<R: Read>(input: R) -> Result<usize, Error> {
     Ok(run(a, b, 5_000_000, 4, 8))
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day15.txt");
 
-    static INPUT: &str = include_str!("../input/day15.txt");
-
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1(Cursor::new(INPUT)).unwrap(), 609);
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2(Cursor::new(INPUT)).unwrap(), 253);
-    }
+problem!{
+    tests => [
+        run_part1 => {part1(::std::io::Cursor::new(INPUT)), "832205b1b70f68d957f7cd606f4f127a3d866a843123ec3ef16f851a146b6d6e"},
+        run_part2 => {part2(::std::io::Cursor::new(INPUT)), "8f23ac526a26a8acce625bf3d571700c15df4c92e4d60dc8ffbd8c0fa4286487"},
+    ];
 }

@@ -33,15 +33,11 @@ where
     Ok(0)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day5.txt");
 
-    static DAY5: &str = include_str!("../input/day5.txt");
-
-    #[test]
-    fn test_one() {
-        assert_eq!(355965, run(Cursor::new(DAY5), |v| v + 1).unwrap());
-    }
+problem!{
+    tests => [
+        part1 => {run(::std::io::Cursor::new(INPUT), |v| v + 1), "7abbc3cc7445b32c47f65d826b20291cd185ddc162faf02d59da6739c1f841ea"},
+        part2 => {run(::std::io::Cursor::new(INPUT), |v| if v < 3 { v + 1 } else { v - 1 }), "404c62038bb1c873e58c108f154de9e1d5581923d03f7bae4e8e3a5772173224"},
+    ];
 }

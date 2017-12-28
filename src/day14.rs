@@ -64,17 +64,9 @@ pub fn part2(input: &str) -> Result<usize, Error> {
     Ok(regions)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1("ljoxqyyw").unwrap(), 8316);
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2("ljoxqyyw").unwrap(), 1074);
-    }
+problem!{
+    tests => [
+        run_part1 => {part1("ljoxqyyw"), "bdcdda0fde396f250dee097af986dd4e60386ede1d07a8911538d4f43f6d5808"},
+        run_part2 => {part2("ljoxqyyw"), "b77146fa1070eca02cb4071195b134a6eb3e69a3b7047f97c74112cac76cf0ce"},
+    ];
 }

@@ -50,3 +50,12 @@ where
 
     Ok(sum)
 }
+
+const INPUT: &str = include_str!("../input/day2.txt");
+
+problem!{
+    tests => [
+        part1 => {run(::std::io::Cursor::new(INPUT), minmax), "dae1b8b23b05ec92fcf343c50c52758a6e7bb258420250a5bd7d73f9f840aca4"},
+        part2 => {run(::std::io::Cursor::new(INPUT), evendiv), "bbf146bfacb860740518b56dfd00adf38f337d57ae8dd3857a350ca1615ff454"},
+    ];
+}

@@ -88,12 +88,8 @@ pub fn run() -> u64 {
     values.len() as u64
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_both() {
-        assert_eq!(run(), 2725);
-    }
+problem!{
+    tests => [
+        both => {run(), "fa014137b3ea9af6a90c0a86a1d099e46f7e56d6eb33db1ad1ec4bdac68c3caa"},
+    ];
 }

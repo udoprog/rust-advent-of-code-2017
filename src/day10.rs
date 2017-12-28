@@ -1,33 +1,6 @@
 use failure::Error;
-use std::fmt;
 use std::io::Read;
-
-pub struct HexSlice<'a>(&'a [u8]);
-
-impl<'a> HexSlice<'a> {
-    pub fn new<T>(data: &'a T) -> HexSlice<'a>
-    where
-        T: ?Sized + AsRef<[u8]> + 'a,
-    {
-        HexSlice(data.as_ref())
-    }
-}
-
-impl<'a> fmt::Display for HexSlice<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for byte in self.0 {
-            write!(f, "{:02x}", byte)?;
-        }
-
-        Ok(())
-    }
-}
-
-impl<'a> fmt::Debug for HexSlice<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "\"{}\"", self)
-    }
-}
+use hex_slice::HexSlice;
 
 fn reverse<T>(d: &mut [T], pos: usize, length: usize) {
     let len = d.len();
@@ -99,16 +72,9 @@ mod tests {
     use super::*;
     use std::io::Cursor;
 
-    static INPUT: &str = include_str!("../input/day10.txt");
-
     #[test]
     fn test_simple() {
         assert_eq!(part1(Cursor::new("3,4,1,5"), 4).unwrap(), 12);
-    }
-
-    #[test]
-    fn test_all() {
-        assert_eq!(part1(Cursor::new(INPUT), 255).unwrap(), 826);
     }
 
     #[test]
@@ -120,14 +86,6 @@ mod tests {
         let mut d = vec![1, 2, 3, 4, 5, 6];
         reverse(&mut d, 1, 6);
         assert_eq!(vec![2, 1, 6, 5, 4, 3], d);
-    }
-
-    #[test]
-    fn p2() {
-        assert_eq!(
-            part2(Cursor::new(INPUT)).unwrap().as_str(),
-            "d067d3f14d07e09c2e7308c3926605c4"
-        );
     }
 
     #[test]
@@ -149,4 +107,13 @@ mod tests {
             "63960835bcdc130f0b66d7ff4f6a5a8e"
         );
     }
+}
+
+const INPUT: &str = include_str!("../input/day10.txt");
+
+problem!{
+    tests => [
+        run_part1 => {part1(::std::io::Cursor::new(INPUT), 255), "6f6e675d6f712b625eb01d5ad19ef2b10f628f870a8006df936cc4b942862459"},
+        run_part2 => {part2(::std::io::Cursor::new(INPUT)), "575f20763a3442b392e95c10cb98eb784192caeb07543297a3f01feef60b3b2d"},
+    ];
 }

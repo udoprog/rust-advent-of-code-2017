@@ -98,8 +98,6 @@ mod tests {
     use super::*;
     use std::io::Cursor;
 
-    static INPUT: &str = include_str!("../input/day16.txt");
-
     #[test]
     fn test_example1() {
         assert_eq!(
@@ -115,28 +113,13 @@ mod tests {
             "ceadb"
         );
     }
+}
 
-    #[test]
-    fn test_part1() {
-        assert_eq!(
-            run(Cursor::new(INPUT), 16, 1).unwrap().as_str(),
-            "padheomkgjfnblic"
-        );
-    }
+const INPUT: &str = include_str!("../input/day16.txt");
 
-    #[test]
-    fn test_extended() {
-        assert_eq!(
-            run(Cursor::new(INPUT), 16, 61).unwrap().as_str(),
-            "padheomkgjfnblic"
-        );
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(
-            run(Cursor::new(INPUT), 16, 1_000_000_000).unwrap().as_str(),
-            "bfcdeakhijmlgopn"
-        );
-    }
+problem!{
+    tests => [
+        run_part1 => {run(::std::io::Cursor::new(INPUT), 16, 1), "0c967262b13a4a86b9a7c71e2f2d4b799f6d3704322208bf9c22ed09d884455d"},
+        run_part2 => {run(::std::io::Cursor::new(INPUT), 16, 1_000_000_000), "960dc4f93ced6a1e4be24bffde9b1e8dd2a7a6a4b1ffdadb3a01160bda705c14"},
+    ];
 }

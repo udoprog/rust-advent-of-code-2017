@@ -179,20 +179,11 @@ pub fn part2() -> i64 {
     h
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day23.txt");
 
-    static INPUT: &str = include_str!("../input/day23.txt");
-
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1(Cursor::new(INPUT)), 3025);
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2(), 915);
-    }
+problem!{
+    tests => [
+        run_part1 => {part1(::std::io::Cursor::new(INPUT)), "69ceb78f3b78535dd8d5b35bbb77f550527ee90ede08d8230cae8eee4103b9d6"},
+        run_part2 => {part2(), "b9dafef03fc90f65d4f9efd71ce73bb7a024381eea09b5f909a977bd0d8d1fa4"},
+    ];
 }

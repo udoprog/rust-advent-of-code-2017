@@ -126,8 +126,6 @@ mod tests {
     use super::*;
     use std::io::Cursor;
 
-    static INPUT: &str = include_str!("../input/day22.txt");
-
     #[test]
     fn test_example1() {
         assert_eq!(part1(Cursor::new("..#\n#..\n..."), 10000).unwrap(), 5587);
@@ -140,14 +138,13 @@ mod tests {
             2511944
         );
     }
+}
 
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1(Cursor::new(INPUT), 10000).unwrap(), 5575);
-    }
+const INPUT: &str = include_str!("../input/day22.txt");
 
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2(Cursor::new(INPUT), 10_000_000).unwrap(), 2511991);
-    }
+problem!{
+    tests => [
+        run_part1 => {part1(::std::io::Cursor::new(INPUT), 10000), "fb7b36d5063ec4648e3a145526ce73e96ef4405387f2bc14e5c3329bf3082ec8"},
+        run_part2 => {part2(::std::io::Cursor::new(INPUT), 10_000_000), "4c5c9dd3cb3bc030d2ae498e9e7af3c175be8a1ee32b7181a381a3a754f1e41f"},
+    ];
 }

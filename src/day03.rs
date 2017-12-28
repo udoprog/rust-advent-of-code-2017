@@ -108,3 +108,10 @@ pub fn run(pos: u64) -> Result<i64, Error> {
         index += 1;
     }
 }
+
+problem!{
+    tests => [
+        part1 => {run(265149), "cffe5f0241319eb68ba4bfbaab2931ffb96eff0d4e2595319ee955c361d30fd1"},
+        part2 => {run_with_larger(265149), "33c3ff913586d9d9f51716096167520991df36d9c9e6d4b1341856ac99e34013"},
+    ];
+}

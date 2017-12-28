@@ -53,22 +53,18 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::Cursor;
-
-    static INPUT: &str = include_str!("../input/day6.txt");
-
-    #[test]
-    fn test_index() {
-        assert_eq!(4074, run(Cursor::new(INPUT), index).unwrap());
-    }
-
-    #[test]
-    fn test_distance() {
-        assert_eq!(2793, run(Cursor::new(INPUT), distance).unwrap());
-    }
 
     #[test]
     fn test_custom() {
-        assert_eq!(5, run(Cursor::new("0\t2\t7\t0"), index).unwrap());
+        assert_eq!(5, run(::std::io::Cursor::new("0\t2\t7\t0"), index).unwrap());
     }
+}
+
+const INPUT: &str = include_str!("../input/day6.txt");
+
+problem!{
+    tests => [
+        part1 => {run(::std::io::Cursor::new(INPUT), index), "e57d2ad0746ead65c57193eaad6d62713cad20f086f0c205f72fbc274011be2d"},
+        part2 => {run(::std::io::Cursor::new(INPUT), distance), "08d8be2e105c68cca0598a301cb51758333bf290d438fc8bff62f03dab44eebe"},
+    ];
 }

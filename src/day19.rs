@@ -55,15 +55,10 @@ pub fn run<R: Read>(reader: R) -> (String, usize) {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day19.txt");
 
-    static INPUT: &str = include_str!("../input/day19.txt");
-
-    #[test]
-    fn test_both() {
-        assert_eq!(run(Cursor::new(INPUT)), ("MKXOIHZNBL".to_string(), 17872));
-    }
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "992e777b31b2f721f812c555c13c50d3e1dd57f234c7f3ed644eb1f92aaea10a"},
+    ];
 }

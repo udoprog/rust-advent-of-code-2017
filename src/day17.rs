@@ -41,14 +41,11 @@ mod tests {
     fn test_example1() {
         assert_eq!(part1(3, 2017).unwrap(), 638);
     }
+}
 
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1(348, 2017).unwrap(), 417);
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2(348, 50_000_000).unwrap(), Some(34334221));
-    }
+problem!{
+    tests => [
+        run_part1 => {part1(348, 2017), "a22202bc74d2bd50711ec9752d3ca91c30b151badc2473860ec6cc358d6bf797"},
+        run_part2 => {part2(348, 50_000_000), "be6817723645dca56b8a07acb273d78ad89b9ae63e9d92028a46e00a64725d5a"},
+    ];
 }

@@ -67,15 +67,10 @@ pub fn run<R: Read>(mut reader: R) -> Result<(u32, u32), Error> {
     Ok((distance(p), max))
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day11.txt");
 
-    static INPUT: &str = include_str!("../input/day11.txt");
-
-    #[test]
-    fn test_problem() {
-        assert_eq!(run(Cursor::new(INPUT)).unwrap(), (685, 1457));
-    }
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "f0a9f97b5812c7d7a2233359447269f5c90fec6ed8b27c6a0ddebd1ee561f434"},
+    ];
 }

@@ -176,13 +176,6 @@ mod tests {
     use super::*;
     use std::io::Cursor;
 
-    static INPUT: &str = include_str!("../input/day20.txt");
-
-    #[test]
-    fn test_part1() {
-        assert_eq!(part1(Cursor::new(INPUT)).unwrap(), 457);
-    }
-
     #[test]
     fn test_part1_nemesis() {
         assert_eq!(
@@ -192,9 +185,13 @@ mod tests {
             1
         );
     }
+}
 
-    #[test]
-    fn test_part2() {
-        assert_eq!(part2(Cursor::new(INPUT)).unwrap(), 0);
-    }
+const INPUT: &str = include_str!("../input/day20.txt");
+
+problem!{
+    tests => [
+        run_part1 => {part1(::std::io::Cursor::new(INPUT)), "4e03b4fe2fb42aee01ba79601d20b0c3321ef87bedc89b43bc023b4d989983d0"},
+        run_part2 => {part2(::std::io::Cursor::new(INPUT)), "365fb0f62e2a989bbd2f649bbe706528fd973479aaddc42b3fe9bf08d73d05ab"},
+    ];
 }

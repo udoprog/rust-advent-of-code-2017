@@ -80,15 +80,10 @@ pub fn run<R: Read>(input: R) -> (u32, u32) {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::io::Cursor;
+const INPUT: &str = include_str!("../input/day24.txt");
 
-    static INPUT: &str = include_str!("../input/day24.txt");
-
-    #[test]
-    fn test_both() {
-        assert_eq!(run(Cursor::new(INPUT)), (1940, 1928));
-    }
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "b6a10f78fcdb219575ef11cc79b5a9fe0dbfafcc1ae09f6b560fa5104d23e7c4"},
+    ];
 }

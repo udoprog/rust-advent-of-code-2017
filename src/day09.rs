@@ -52,13 +52,6 @@ mod tests {
     use super::*;
     use std::io::Cursor;
 
-    static INPUT: &str = include_str!("../input/day9.txt");
-
-    #[test]
-    fn test_all() {
-        assert_eq!((14204, 6622), run(Cursor::new(INPUT)).unwrap());
-    }
-
     #[test]
     fn test_one() {
         assert_eq!((1, 0), run(Cursor::new("{}")).unwrap());
@@ -76,4 +69,12 @@ mod tests {
         );
         assert_eq!((16, 0), run(Cursor::new("{{{},{},{{}}}}")).unwrap());
     }
+}
+
+const INPUT: &str = include_str!("../input/day9.txt");
+
+problem!{
+    tests => [
+        both => {run(::std::io::Cursor::new(INPUT)), "70e47166875e064f06a9d99abae87064c742b69039b7c9d410b0fbda7a6ee579"},
+    ];
 }
